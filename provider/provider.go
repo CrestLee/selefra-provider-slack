@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"github.com/selefra/selefra-provider-slack/slack_client"
+	"os"
 
 	"github.com/selefra/selefra-provider-sdk/provider"
 	"github.com/selefra/selefra-provider-sdk/provider/schema"
@@ -29,6 +30,14 @@ func GetProvider() *provider.Provider {
 					slackConfig.Providers = append(slackConfig.Providers, slack_client.Config{})
 				}
 
+				if slackConfig.Providers[0].Token == "" {
+					slackConfig.Providers[0].Token = os.Getenv("SLACK_TOKEN")
+				}
+
+				if slackConfig.Providers[0].Token == "" {
+					return nil, schema.NewDiagnostics().AddErrorMsg("missing token in configuration")
+				}
+
 				clients, err := slack_client.NewClients(slackConfig)
 
 				if err != nil {
@@ -52,15 +61,11 @@ func GetProvider() *provider.Provider {
 				return `# token: "<YOUR_ACCESS_TOKEN>"`
 			},
 			Validation: func(ctx context.Context, config *viper.Viper) *schema.Diagnostics {
-				var client_config slack_client.Configs
-				err := config.Unmarshal(&client_config.Providers)
+				var clientConfig slack_client.Configs
+				err := config.Unmarshal(&clientConfig.Providers)
 
 				if err != nil {
 					return schema.NewDiagnostics().AddErrorMsg("analysis config err: %s", err.Error())
-				}
-
-				if len(client_config.Providers) == 0 {
-					return schema.NewDiagnostics().AddErrorMsg("analysis config err: no configuration")
 				}
 
 				return nil
