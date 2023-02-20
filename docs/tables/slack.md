@@ -23,5 +23,7 @@ selefra provider install slack
 - [slack_conversation](slack_conversation.md)
 - [slack_emoji](slack_emoji.md)
 - [slack_group](slack_group.md)
+- [slack file](slack_file.md)
+- [slack_team](slack_team.md)
 
 
