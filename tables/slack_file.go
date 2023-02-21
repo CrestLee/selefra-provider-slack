@@ -2,6 +2,7 @@ package tables
 
 import (
 	"context"
+	"github.com/selefra/selefra-provider-sdk/provider/transformer/column_value_extractor"
 
 	"github.com/selefra/selefra-provider-slack/slack_client"
 	"github.com/slack-go/slack"
@@ -63,31 +64,48 @@ func (x *TableSlackFileGenerator) GetExpandClientTask() func(ctx context.Context
 
 func (x *TableSlackFileGenerator) GetColumns() []*schema.Column {
 	return []*schema.Column{
-		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).Description("file id").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).Description("file id").
+			Extractor(column_value_extractor.StructSelector("ID")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("created").ColumnType(schema.ColumnTypeInt).Description("file crated at").Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("name").ColumnType(schema.ColumnTypeString).Description("file name").Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("title").ColumnType(schema.ColumnTypeString).Description("file title").Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("mimetype").ColumnType(schema.ColumnTypeString).Description("file mime type").Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("image_exif_rotation").ColumnType(schema.ColumnTypeInt).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("file_type").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("pretty_type").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("image_exif_rotation").ColumnType(schema.ColumnTypeInt).
+			Extractor(column_value_extractor.StructSelector("ImageExifRotation")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("file_type").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("Filetype")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("pretty_type").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("PrettyType")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("user").ColumnType(schema.ColumnTypeString).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("mode").ColumnType(schema.ColumnTypeString).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("editable").ColumnType(schema.ColumnTypeBool).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_external").ColumnType(schema.ColumnTypeBool).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("external_type").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_external").ColumnType(schema.ColumnTypeBool).
+			Extractor(column_value_extractor.StructSelector("IsExternal")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("external_type").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("ExternalType")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("size").ColumnType(schema.ColumnTypeInt).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("url_private").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("url_private_download").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("edit_link").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("url_private").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("URLPrivate")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("url_private_download").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("URLPrivateDownload")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("edit_link").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("EditLink")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("preview").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_public").ColumnType(schema.ColumnTypeBool).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_public").ColumnType(schema.ColumnTypeBool).
+			Extractor(column_value_extractor.StructSelector("IsPublic")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("channels").ColumnType(schema.ColumnTypeStringArray).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("groups").ColumnType(schema.ColumnTypeStringArray).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("ims").ColumnType(schema.ColumnTypeStringArray).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("comments_count").ColumnType(schema.ColumnTypeInt).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("num_stars").ColumnType(schema.ColumnTypeInt).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_starred").ColumnType(schema.ColumnTypeBool).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("ims").ColumnType(schema.ColumnTypeStringArray).
+			Extractor(column_value_extractor.StructSelector("IMs")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("comments_count").ColumnType(schema.ColumnTypeInt).
+			Extractor(column_value_extractor.StructSelector("CommentsCount")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("num_stars").ColumnType(schema.ColumnTypeInt).
+			Extractor(column_value_extractor.StructSelector("NumStars")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_starred").ColumnType(schema.ColumnTypeBool).
+			Extractor(column_value_extractor.StructSelector("IsStarred")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("shares").ColumnType(schema.ColumnTypeJSON).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("initial_comment").ColumnType(schema.ColumnTypeJSON).
+			Extractor(column_value_extractor.StructSelector("InitialComment")).Build(),
 	}
 }
 

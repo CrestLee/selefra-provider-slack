@@ -2,6 +2,7 @@ package tables
 
 import (
 	"context"
+	"github.com/selefra/selefra-provider-sdk/provider/transformer/column_value_extractor"
 
 	"github.com/selefra/selefra-provider-sdk/provider/schema"
 	"github.com/selefra/selefra-provider-slack/slack_client"
@@ -55,10 +56,13 @@ func (x *TableSlackTeamInfoGenerator) GetExpandClientTask() func(ctx context.Con
 
 func (x *TableSlackTeamInfoGenerator) GetColumns() []*schema.Column {
 	return []*schema.Column{
-		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("name").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("ID")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("name").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("Name")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("domain").ColumnType(schema.ColumnTypeString).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("email_domain").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("email_domain").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("EmailDomain")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("icon").ColumnType(schema.ColumnTypeJSON).Build(),
 	}
 }
