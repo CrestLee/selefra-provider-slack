@@ -65,21 +65,26 @@ func (x *TableSlackUserGenerator) GetColumns() []*schema.Column {
 			Extractor(column_value_extractor.StructSelector("Profile.DisplayName")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("bot_id").ColumnType(schema.ColumnTypeString).Description("If a bot user, this is the unique identifier of the bot.").
 			Extractor(column_value_extractor.StructSelector("Profile.BotID")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("deleted").ColumnType(schema.ColumnTypeBool).Description("True if the user has been deleted.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("deleted").ColumnType(schema.ColumnTypeBool).Description("True if the user has been deleted.").
+			Extractor(column_value_extractor.StructSelector("Deleted")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("image_24").ColumnType(schema.ColumnTypeString).Description("URL of the user profile image, size 24x24 pixels.").
 			Extractor(column_value_extractor.StructSelector("Profile.Image24")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("image_32").ColumnType(schema.ColumnTypeString).Description("URL of the user profile image, size 32x32 pixels.").
 			Extractor(column_value_extractor.StructSelector("Profile.Image32")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_restricted").ColumnType(schema.ColumnTypeBool).Description("Indicates whether or not the user is a guest user. Use in combination with the is_ultra_restricted field to check if the user is a single-channel guest user.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_restricted").ColumnType(schema.ColumnTypeBool).Description("Indicates whether or not the user is a guest user. Use in combination with the is_ultra_restricted field to check if the user is a single-channel guest user.").
+			Extractor(column_value_extractor.StructSelector("IsRestricted")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("last_name").ColumnType(schema.ColumnTypeString).Description("Last name of the user.").
 			Extractor(column_value_extractor.StructSelector("Profile.LastName")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("color").ColumnType(schema.ColumnTypeString).Description("Used in some clients to display a special username color.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("color").ColumnType(schema.ColumnTypeString).Description("Used in some clients to display a special username color.").
+			Extractor(column_value_extractor.StructSelector("Color")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("has_2fa").ColumnType(schema.ColumnTypeBool).Description("True if two-factor authentication is enabled for the user.").
 			Extractor(column_value_extractor.StructSelector("Has2FA")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("image_192").ColumnType(schema.ColumnTypeString).Description("URL of the user profile image, size 192x192 pixels.").
 			Extractor(column_value_extractor.StructSelector("Profile.Image192")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_admin").ColumnType(schema.ColumnTypeBool).Description("True if the user is an administrator of the current workspace.").Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_owner").ColumnType(schema.ColumnTypeBool).Description("True if the user is an owner of the current workspace.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_admin").ColumnType(schema.ColumnTypeBool).Description("True if the user is an administrator of the current workspace.").
+			Extractor(column_value_extractor.StructSelector("IsAdmin")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_owner").ColumnType(schema.ColumnTypeBool).Description("True if the user is an owner of the current workspace.").
+			Extractor(column_value_extractor.StructSelector("IsOwner")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("status_expiration").ColumnType(schema.ColumnTypeTimestamp).Description("Expiration for the user status.").
 			Extractor(column_value_extractor.StructSelector("Profile.StatusExpiration")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("tz_label").ColumnType(schema.ColumnTypeString).Description("Describes the commonly used name of the timezone.").
@@ -88,12 +93,16 @@ func (x *TableSlackUserGenerator) GetColumns() []*schema.Column {
 			Extractor(column_value_extractor.StructSelector("Updated")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("image_72").ColumnType(schema.ColumnTypeString).Description("URL of the user profile image, size 72x72 pixels.").
 			Extractor(column_value_extractor.StructSelector("Profile.Image72")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_app_user").ColumnType(schema.ColumnTypeBool).Description("True if the user is an owner of the current workspace.").Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_bot").ColumnType(schema.ColumnTypeBool).Description("True if the user is a bot.").Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_primary_owner").ColumnType(schema.ColumnTypeBool).Description("True if the user is the primary owner of the current workspace.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_app_user").ColumnType(schema.ColumnTypeBool).Description("True if the user is an owner of the current workspace.").
+			Extractor(column_value_extractor.StructSelector("IsAppUser")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_bot").ColumnType(schema.ColumnTypeBool).Description("True if the user is a bot.").
+			Extractor(column_value_extractor.StructSelector("IsBot")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_primary_owner").ColumnType(schema.ColumnTypeBool).Description("True if the user is the primary owner of the current workspace.").
+			Extractor(column_value_extractor.StructSelector("IsPrimaryOwner")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("tz").ColumnType(schema.ColumnTypeString).Description("A human-readable string for the geographic timezone-related region this user has specified in their account.").
 			Extractor(column_value_extractor.StructSelector("TZ")).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("is_ultra_restricted").ColumnType(schema.ColumnTypeBool).Description("Indicates whether or not the user is a single-channel guest.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("is_ultra_restricted").ColumnType(schema.ColumnTypeBool).Description("Indicates whether or not the user is a single-channel guest.").
+			Extractor(column_value_extractor.StructSelector("IsUltraRestricted")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("profile_fields").ColumnType(schema.ColumnTypeJSON).Description("Custom fields for the profile.").
 			Extractor(column_value_extractor.StructSelector("Profile.Fields")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("status_text").ColumnType(schema.ColumnTypeString).Description("Status text the user has set.").
@@ -116,7 +125,8 @@ func (x *TableSlackUserGenerator) GetColumns() []*schema.Column {
 				extractor := column_value_extractor.StructSelector("Domain")
 				return extractor.Extract(ctx, clientMeta, taskClient, task, row, column, r)
 			})).Build(),
-		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).Description("Unique identifier for the user.").Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("id").ColumnType(schema.ColumnTypeString).Description("Unique identifier for the user.").
+			Extractor(column_value_extractor.StructSelector("ID")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("api_app_id").ColumnType(schema.ColumnTypeString).Description("If an app user, then this is the unique identifier of the installed Slack application.").
 			Extractor(column_value_extractor.StructSelector("Profile.ApiAppID")).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("email").ColumnType(schema.ColumnTypeString).Description("Email address of the user.").

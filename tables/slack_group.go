@@ -2,6 +2,7 @@ package tables
 
 import (
 	"context"
+
 	"github.com/selefra/selefra-provider-slack/slack_client"
 
 	"github.com/selefra/selefra-provider-sdk/provider/schema"
