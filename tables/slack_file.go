@@ -106,6 +106,10 @@ func (x *TableSlackFileGenerator) GetColumns() []*schema.Column {
 		table_schema_generator.NewColumnBuilder().ColumnName("shares").ColumnType(schema.ColumnTypeJSON).Build(),
 		table_schema_generator.NewColumnBuilder().ColumnName("initial_comment").ColumnType(schema.ColumnTypeJSON).
 			Extractor(column_value_extractor.StructSelector("InitialComment")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("permalink_public").ColumnType(schema.ColumnTypeString).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("public_url_shared").ColumnType(schema.ColumnTypeString).
+			Extractor(column_value_extractor.StructSelector("PublicURLShared")).Build(),
+		table_schema_generator.NewColumnBuilder().ColumnName("permalink").ColumnType(schema.ColumnTypeString).Build(),
 	}
 }
 
