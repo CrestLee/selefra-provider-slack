@@ -9,7 +9,6 @@ import (
 func GenTables() []*schema.Table {
 	return []*schema.Table{
 		table_schema_generator.GenTableSchema(&tables.TableSlackUserGenerator{}),
-		table_schema_generator.GenTableSchema(&tables.TableSlackAccessLogGenerator{}), // TODO: pull table slack_access_log error: paid only
 		table_schema_generator.GenTableSchema(&tables.TableSlackConnectionGenerator{}),
 		table_schema_generator.GenTableSchema(&tables.TableSlackConversationGenerator{}),
 		table_schema_generator.GenTableSchema(&tables.TableSlackEmojiGenerator{}),
