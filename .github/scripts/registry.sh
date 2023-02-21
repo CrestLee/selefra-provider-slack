@@ -44,7 +44,7 @@ if [[ "$VERSION" != "$version" ]]; then
   sed "${sedi[@]}" "s#{{.ProviderName}}#googleworkspace#g" provider/template/metadata.yaml 
   sed "${sedi[@]}" "s#{{.LatestVersion}}#${version}#g" provider/template/metadata.yaml
   sed "${sedi[@]}" "s#{{.LatestUpdated}}#${time}#g" provider/template/metadata.yaml
-  sed "${sedi[@]}" "s#{{.Introduction}}#A Selefra provider for Amazon Web Services (googleworkspace).#g" provider/template/metadata.yaml
+  sed "${sedi[@]}" "s#{{.Introduction}}#A Selefra provider for Slack API .#g" provider/template/metadata.yaml
   sed "${sedi[@]}" "s#{{.ProviderVersion}}#${version}#g" provider/template/metadata.yaml
   sed "${sedi[@]}" '6d' provider/template/metadata.yaml
   if [ -f "provider/googleworkspace/metadata.yaml" ];then
